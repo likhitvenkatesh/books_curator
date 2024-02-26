@@ -94,7 +94,6 @@ header_style = """
             
     </style>
 """
-# st.set_page_config(layout="wide")
 
 # Adding the CSS to the Streamlit app
 st.markdown(header_style, unsafe_allow_html=True)
