@@ -146,25 +146,26 @@ def main():
                 for genre in selected_genres:
                     st.subheader(genre)
                     result = search_books_by_genre([genre], api_key)
-                    for item in result.get('items', []):
-                        volume_info = item['volumeInfo']
-                        title = volume_info['title']
-                        authors = volume_info.get('authors', ['Unknown'])
-                        description = volume_info.get('description', 'No description available')
-                        cover_image_link = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else 'No cover available'
-                        preview_link = volume_info.get('previewLink', 'No preview available')
-                        
-                        st.markdown(f'<div style="background-color: black; padding: 10px; text-align: center; text-transform: uppercase; color: white;">Title: {title}</div>', unsafe_allow_html=True)
-                        st.markdown("")
-                        st.markdown(f'<div style="text-align: center; text-transform: uppercase; color: white;">Author: {", ".join(authors)}</div>', unsafe_allow_html=True)
-                        st.markdown("")
-                        st.write("**Description:**", description)
-                        if cover_image_link != 'No cover available':
-                            st.image(cover_image_link, caption='Cover Image', width=150)
-                        else:
-                            st.write("Cover Image not available")
-                    st.write("**Preview Link:**", preview_link)
-                    st.write("---")
+                    if 'items' in result:
+                        for item in result['items']:
+                            volume_info = item.get('volumeInfo', {})
+                            title = volume_info.get('title', 'No title available')
+                            authors = volume_info.get('authors', ['Unknown'])
+                            description = volume_info.get('description', 'No description available')
+                            cover_image_link = volume_info.get('imageLinks', {}).get('thumbnail', 'No cover available')
+                            preview_link = volume_info.get('previewLink', 'No preview available')
+
+                            st.markdown(f'<div style="background-color: black; padding: 10px; text-align: center; text-transform: uppercase; color: white;">Title: {title}</div>', unsafe_allow_html=True)
+                            st.markdown("")
+                            st.markdown(f'<div style="text-align: center; text-transform: uppercase; color: white;">Author: {", ".join(authors)}</div>', unsafe_allow_html=True)
+                            st.markdown("")
+                            st.write("**Description:**", description)
+                            if cover_image_link != 'No cover available':
+                                st.image(cover_image_link, caption='Cover Image', width=150)
+                            else:
+                                st.write("Cover Image not available")
+                            st.write("**Preview Link:**", preview_link)
+                            st.write("---")
 
     elif search_option == 'Author':
         authors = st.multiselect("Select Author(s)", ['J.K. Rowling', 'Stephen King', 'George R.R. Martin', 'Agatha Christie', 'Tolkien', 'Haruki Murakami', 'Neil Gaiman', 'Dan Brown', 'Margaret Atwood', 'Ernest Hemingway',
@@ -184,25 +185,26 @@ def main():
             if authors:
                 api_key = 'AIzaSyArTvhMGlt1AAbo2FGhSO-tj2_6eriZAIk'  # Use provided API key
                 result = search_books_by_author(authors, api_key)
-                for item in result.get('items', []):
-                    volume_info = item['volumeInfo']
-                    title = volume_info['title']
-                    authors = volume_info.get('authors', ['Unknown'])
-                    description = volume_info.get('description', 'No description available')
-                    cover_image_link = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else 'No cover available'
-                    preview_link = volume_info.get('previewLink', 'No preview available')
-                    
-                    st.markdown(f'<div style="background-color: black; padding: 10px; text-align: center; text-transform: uppercase; color: white;">Title: {title}</div>', unsafe_allow_html=True)
-                    st.markdown("")
-                    st.markdown(f'<div style="text-align: center; text-transform: uppercase; color: white;">Author: {", ".join(authors)}</div>', unsafe_allow_html=True)
-                    st.markdown("")
-                    st.write("**Description:**", description)
-                    if cover_image_link != 'No cover available':
-                        st.image(cover_image_link, caption='Cover Image', width=150)
-                    else:
-                        st.write("Cover Image not available")
-                    st.write("**Preview Link:**", preview_link)
-                    st.write("---")
+                if 'items' in result:
+                    for item in result['items']:
+                        volume_info = item.get('volumeInfo', {})
+                        title = volume_info.get('title', 'No title available')
+                        authors = volume_info.get('authors', ['Unknown'])
+                        description = volume_info.get('description', 'No description available')
+                        cover_image_link = volume_info.get('imageLinks', {}).get('thumbnail', 'No cover available')
+                        preview_link = volume_info.get('previewLink', 'No preview available')
+
+                        st.markdown(f'<div style="background-color: black; padding: 10px; text-align: center; text-transform: uppercase; color: white;">Title: {title}</div>', unsafe_allow_html=True)
+                        st.markdown("")
+                        st.markdown(f'<div style="text-align: center; text-transform: uppercase; color: white;">Author: {", ".join(authors)}</div>', unsafe_allow_html=True)
+                        st.markdown("")
+                        st.write("**Description:**", description)
+                        if cover_image_link != 'No cover available':
+                            st.image(cover_image_link, caption='Cover Image', width=150)
+                        else:
+                            st.write("Cover Image not available")
+                        st.write("**Preview Link:**", preview_link)
+                        st.write("---")
 
 if __name__ == '__main__':
     main()
